@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Agricultural</title>
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --primary-dark: #388E3C;
+      --secondary: #8BC34A;
+      --light: #18d418;
+      --dark: #2E7D32;
+      --text: #212121;
+      --text-light: #757575;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: #e3e7e3;
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .auth-container {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      animation: fadeIn 0.5s ease-out;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .auth-header {
+      background-color: var(--primary);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+    .auth-header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+    .auth-form {
+      padding: 30px;
+      flex: 1;
+    }
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      background-color: #f9f9f9;
+      transition: all 0.3s ease;
+    }
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+      outline: none;
+      background-color: white;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      background-color: var(--primary);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    .btn:hover {
+      background-color: var(--primary-dark);
+    }
+    .otp-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .otp-group input {
+      flex: 1;
+    }
+    .send-otp-btn {
+      padding: 12px 15px;
+      background: var(--secondary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .send-otp-btn:hover {
+      background: var(--primary-dark);
+    }
+    .auth-footer {
+      text-align: center;
+      padding: 15px;
+      border-top: 1px solid #eee;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+    .back-home-bottom {
+      margin: 15px auto;
+      background: var(--dark);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      width: 90%;
+      font-size: 1rem;
+    }
+    .back-home-bottom:hover {
+      background: var(--primary-dark);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-section { display: none; }
+    .form-section.active { display: block; }
+    .login-mode {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    .mode-btn {
+      padding: 10px 20px;
+      border: none;
+      background: #f0f0f0;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+    .mode-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+    .login-section { display: none; }
+    .login-section.active { display: block; }
+    .toggle-form {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+    .toggle-form a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .toggle-form a:hover {
+      text-decoration: underline;
+    }
+    .message {
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: 500;
+    }
+    .error {
+      background: #f44336;
+      color: white;
+    }
+    .success {
+      background: #4CAF50;
+      color: white;
+    }
+    .form-title {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+    .resend-link {
+      color: var(--secondary);
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="auth-container">
+    <div class="auth-container">
+      <div class="auth-header">
+        <h1>Agricultural</h1>
+        <p>Connecting farmers to the digital agricultural ecosystem</p>
+      </div>
+      
+      <div class="auth-form">
+        <div id="login-form" class="form-section active">
+          <h2 class="form-title">Farmer Login</h2>
+          
+          <div id="message-container"></div>
+          
+          <div class="login-mode">
+            <button class="mode-btn active" onclick="switchLoginMode('otp')">Login with OTP</button>
+            <button class="mode-btn" onclick="switchLoginMode('password')">Login with Password</button>
+          </div>
+          
+          <div id="otp-section" class="login-section active">
+            <form id="send-otp-form" method="post" action="login" onsubmit="return validatePhone()">
+              <input type="hidden" name="action" value="sendOtp">
+              <div class="form-group">
+                <label for="login-phone">Phone Number</label>
+                <div class="otp-group">
+                  <input type="tel" id="login-phone" name="phone" class="form-control" placeholder="Enter phone number" required>
+                  <button type="submit" class="send-otp-btn">Send OTP</button>
+                </div>
+              </div>
+            </form>
+            <form id="verify-otp-form" method="post" action="login" style="display: none;">
+              <input type="hidden" name="action" value="verifyOtp">
+              <div class="form-group">
+                <label for="login-OTP">Enter OTP (6 digits)</label>
+                <input type="text" id="login-OTP" name="otp" class="form-control" placeholder="Enter OTP" required maxlength="6" pattern="\d{6}">
+              </div>
+              <button type="submit" class="btn">Verify & Login</button>
+              <div class="toggle-form">
+                <p><a href="#" class="resend-link" onclick="resendOtp()">Didn't receive OTP? Resend</a></p>
+              </div>
+            </form>
+          </div>
+          
+          <div id="password-section" class="login-section">
+            <form id="password-login-form" method="post" action="login">
+              <input type="hidden" name="action" value="passwordLogin">
+              <div class="form-group">
+                <label for="login-phone-pwd">Phone Number</label>
+                <input type="tel" id="login-phone-pwd" name="phone" class="form-control" placeholder="Enter phone number" required>
+              </div>
+              <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" name="password" class="form-control" placeholder="Enter password" required>
+              </div>
+              <button type="submit" class="btn">Login</button>
+            </form>
+            <div class="toggle-form">
+              <p><a href="#" onclick="alert('Password reset link sent to your registered email/phone!')">Forgot Password?</a></p>
+            </div>
+          </div>
+          
+          <div class="toggle-form">
+            <p>New to Agricultural? <a href="register.html">Register here</a></p>
+          </div>
+        </div>
+      </div>
+      <button class="back-home-bottom" onclick="window.location.href='index.html'">Back to Home</button>
+      <div class="auth-footer">
+        <p>© 2025 Agricultural. All rights reserved. <a href="#">Terms</a> | <a href="#">Privacy</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let otpSent = false;
+    let currentPhone = '';
+
+    function validatePhone() {
+      const phone = document.getElementById('login-phone').value.trim();
+      if (!phone || phone.length < 10) {
+        alert('Please enter a valid phone number (at least 10 digits).');
+        return false;
+      }
+      currentPhone = phone;
+      return true;
+    }
+
+    function switchLoginMode(mode) {
+      const otpSection = document.getElementById('otp-section');
+      const passwordSection = document.getElementById('password-section');
+      const otpBtn = document.querySelector('.mode-btn[onclick="switchLoginMode(\'otp\')"]');
+      const passwordBtn = document.querySelector('.mode-btn[onclick="switchLoginMode(\'password\')"]');
+      
+      if (mode === 'otp') {
+        otpSection.classList.add('active');
+        passwordSection.classList.remove('active');
+        otpBtn.classList.add('active');
+        passwordBtn.classList.remove('active');
+        if (otpSent) {
+          document.getElementById('send-otp-form').style.display = 'none';
+          document.getElementById('verify-otp-form').style.display = 'block';
+          document.getElementById('login-OTP').focus();
+        } else {
+          document.getElementById('send-otp-form').style.display = 'block';
+          document.getElementById('verify-otp-form').style.display = 'none';
+        }
+      } else {
+        passwordSection.classList.add('active');
+        otpSection.classList.remove('active');
+        passwordBtn.classList.add('active');
+        otpBtn.classList.remove('active');
+        otpSent = false; // Reset OTP state when switching
+      }
+    }
+
+    function resendOtp() {
+      otpSent = false;
+      document.getElementById('verify-otp-form').style.display = 'none';
+      document.getElementById('send-otp-form').style.display = 'block';
+      document.getElementById('login-phone').value = currentPhone;
+      document.getElementById('login-phone').focus();
+    }
+
+    // Handle page load: Display messages and OTP popup
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const messageContainer = document.getElementById('message-container');
+      
+      // Display error/success message
+      let messageHtml = '';
+      if (urlParams.has('error')) {
+        messageHtml = '<div class="message error">' + decodeURIComponent(urlParams.get('error')) + '</div>';
+      } else if (urlParams.has('msg')) {
+        messageHtml = '<div class="message success">' + decodeURIComponent(urlParams.get('msg')) + '</div>';
+      }
+      if (messageHtml) {
+        messageContainer.innerHTML = messageHtml;
+        if (urlParams.has('msg')) {
+          setTimeout(() => { messageContainer.innerHTML = ''; }, 5000);
+        }
+      }
+
+      // Handle OTP popup (from servlet redirect)
+      if (urlParams.has('otpValue')) {
+        const otpValue = urlParams.get('otpValue');
+        const phone = urlParams.get('phone') || currentPhone;
+        alert(`OTP sent to ${phone}!\n(For testing: Your OTP is: ${otpValue})\nEnter it below to verify.`);
+        otpSent = true;
+        switchLoginMode('otp');
+        document.getElementById('send-otp-form').style.display = 'none';
+        document.getElementById('verify-otp-form').style.display = 'block';
+        document.getElementById('login-OTP').focus();
+        
+        // Clean URL (remove otpValue for security/clean UX)
+        const newUrl = window.location.pathname + window.location.search.replace(/&?otpValue=\d+/, '');
+        window.history.replaceState({}, document.title, newUrl);
+      }
+    });
+  </script>
+</body>
+</html>

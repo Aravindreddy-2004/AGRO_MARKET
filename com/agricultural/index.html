@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agricultural Crops Stock App</title>
+  <style>
+    :root {
+      --primary: #4CAF50; --primary-dark: #388E3C; --secondary: #8BC34A; --light: #18d418; --dark: #2E7D32; --text: #212121; --text-light: #757575;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #e3e7e3; color: var(--text); min-height: 100vh; } 
+    .home-page { 
+      background: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/881073df-460d-4d57-99d4-a029b58f1ebb.png') no-repeat center center/cover; 
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: space-around; align-items: center; text-align: center;  
+    }
+    .home-logo img { width: 180px; height: 180px; background: white; border-radius: 50%;  padding: 20px;box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+    .home-logo h1 { margin-top: 15px; font-size: 2rem; font-weight: bold; color: white; }
+    .home-buttons { margin-bottom: 40px; display: flex; gap: 20px; flex-wrap: wrap; }
+    .home-buttons button { 
+      padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; color: white; 
+      background-color: var(--primary); transition: all 0.3s ease; text-decoration: none; display: block; 
+    }
+    .home-buttons button:hover { background-color: var(--primary-dark); transform: translateY(-2px); }
+    a {
+  text-decoration: none;
+}
+  </style>
+</head>
+<body>
+  <div class="home-page" id="home-page">
+    <div class="home-logo">
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a0a0f665-a683-4483-9898-212a613887b3.png" alt="Agricultural Logo">
+      <h1>Agricultural</h1>
+    </div>
+    <div class="home-buttons">
+      <a href="login.html"><button>Login</button></a>
+      <a href="register.html"><button>Register</button></a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Agricultural</title>
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --primary-dark: #388E3C;
+      --secondary: #8BC34A;
+      --light: #18d418;
+      --dark: #2E7D32;
+      --text: #212121;
+      --text-light: #757575;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: #e3e7e3;
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .auth-container {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      animation: fadeIn 0.5s ease-out;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .auth-header {
+      background-color: var(--primary);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      position: relative;
+    }
+    .auth-header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+    .auth-form {
+      padding: 30px;
+      flex: 1;
+    }
+    .form-group {
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      background-color: #f9f9f9;
+      transition: all 0.3s ease;
+    }
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+      outline: none;
+      background-color: white;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      background-color: var(--primary);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    .btn:hover {
+      background-color: var(--primary-dark);
+    }
+    .auth-footer {
+      text-align: center;
+      padding: 15px;
+      border-top: 1px solid #eee;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+    .back-home-bottom {
+      margin: 15px auto;
+      background: var(--dark);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      width: 90%;
+      font-size: 1rem;
+    }
+    .back-home-bottom:hover {
+      background: var(--primary-dark);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-section { display: none; }
+    .form-section.active { display: block; }
+    .toggle-form {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+    .toggle-form a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .toggle-form a:hover {
+      text-decoration: underline;
+    }
+    /* Message styles for servlet redirects */
+    .message {
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: 500;
+    }
+    .error {
+      background: #f44336;
+      color: white;
+    }
+    .success {
+      background: #4CAF50;
+      color: white;
+    }
+    .form-title {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="auth-container">
+    <div class="auth-container">
+      <div class="auth-header">
+        <h1>Agricultural</h1>
+        <p>Connecting farmers to the digital agricultural ecosystem</p>
+      </div>
+      
+      <div class="auth-form">
+        <div id="register-form" class="form-section active">
+          <h2 class="form-title">Farmer Registration</h2>
+          
+          <!-- Dynamic message display from URL params -->
+          <div id="message-container"></div>
+          <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const messageContainer = document.getElementById('message-container');
+            let messageHtml = '';
+            if (urlParams.has('error')) {
+              messageHtml = '<div class="message error">' + decodeURIComponent(urlParams.get('error')) + '</div>';
+            } else if (urlParams.has('msg')) {
+              messageHtml = '<div class="message success">' + decodeURIComponent(urlParams.get('msg')) + '</div>';
+            }
+            if (messageHtml) {
+              messageContainer.innerHTML = messageHtml;
+              // Auto-hide success after 5s
+              if (urlParams.has('msg')) {
+                setTimeout(() => { messageContainer.innerHTML = ''; }, 5000);
+              }
+            }
+          </script>
+          
+          <form id="register-form-submit" method="post" action="/agricultural/register">
+            <div class="form-group">
+              <label for="register-name">Full Name</label>
+              <input type="text" id="register-name" name="name" class="form-control" placeholder="Enter full name" required>
+            </div>
+            <div class="form-group">
+              <label for="register-email">Email</label>
+              <input type="email" id="register-email" name="email" class="form-control" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label for="register-phone">Phone Number</label>
+              <input type="tel" id="register-phone" name="phone" class="form-control" placeholder="Enter phone number" required>
+            </div>
+            <div class="form-group">
+              <label for="register-password">Create Password</label>
+              <input type="password" id="register-password" name="password" class="form-control" placeholder="Create a password" required minlength="6">
+            </div>
+            <div class="form-group">
+              <label for="register-confirm">Confirm Password</label>
+              <input type="password" id="register-confirm" name="confirmPassword" class="form-control" placeholder="Confirm your password" required minlength="6">
+            </div>
+            <button type="submit" class="btn">Register</button>
+          </form>
+          
+          <div class="toggle-form">
+            <p>Already have an account? <a href="login.html">Login here</a></p>
+          </div>
+        </div>
+      </div>
+      <button class="back-home-bottom" onclick="window.location.href='index.html'">Back to Home</button>
+      <div class="auth-footer">
+        <p>© 2025 Agricultural. All rights reserved. <a href="#">Terms</a> | <a href="#">Privacy</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Client-side password confirmation
+    document.getElementById('register-form-submit').addEventListener('submit', function(e) {
+      const password = document.getElementById('register-password').value;
+      const confirmPassword = document.getElementById('register-confirm').value;
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('Passwords do not match. Please try again.');
+        document.getElementById('register-confirm').focus();
+        return false;
+      }
+      if (password.length < 6) {
+        e.preventDefault();
+        alert('Password must be at least 6 characters long.');
+        return false;
+      }
+    });
+
+    // Optional: Real-time password match indicator (visual feedback)
+    document.getElementById('register-confirm').addEventListener('input', function() {
+      const password = document.getElementById('register-password').value;
+      const confirm = this.value;
+      const confirmLabel = document.querySelector('label[for="register-confirm"]');
+      if (confirm && confirm !== password) {
+        confirmLabel.style.color = '#f44336';
+        confirmLabel.textContent = 'Confirm Password * (Does not match)';
+      } else if (confirm === password) {
+        confirmLabel.style.color = '#4CAF50';
+        confirmLabel.textContent = 'Confirm Password * (Matches)';
+      } else {
+        confirmLabel.style.color = 'inherit';
+        confirmLabel.textContent = 'Confirm Password';
+      }
+    });
+  </script>
+</body>
+</html>
